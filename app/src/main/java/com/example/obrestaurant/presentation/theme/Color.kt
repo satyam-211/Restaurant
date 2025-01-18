@@ -1,4 +1,4 @@
-package com.example.obrestaurant.ui.theme
+package com.example.obrestaurant.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
