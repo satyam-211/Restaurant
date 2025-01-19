@@ -1,12 +1,17 @@
 package com.example.obrestaurant.data.remote.api
 
+import com.example.obrestaurant.data.remote.api.dto.FilterRequest
+import com.example.obrestaurant.data.remote.api.dto.FilterResponse
+import com.example.obrestaurant.data.remote.api.dto.ItemListRequest
+import com.example.obrestaurant.data.remote.api.dto.ItemListResponse
+import com.example.obrestaurant.data.remote.api.dto.PaymentRequest
+import com.example.obrestaurant.data.remote.api.dto.PaymentResponse
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface RestaurantApi {
 
-    @GET("/emulator/interview/get_item_list")
+    @POST("/emulator/interview/get_item_list")
     suspend fun getItemList(
         @Body request: ItemListRequest
     ): ItemListResponse
