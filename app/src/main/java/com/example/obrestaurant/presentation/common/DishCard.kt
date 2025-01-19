@@ -1,4 +1,4 @@
-package com.example.obrestaurant.presentation.home.components
+package com.example.obrestaurant.presentation.common
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border

@@ -10,6 +10,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.obrestaurant.presentation.cuisine.CuisineScreen
+import com.example.obrestaurant.presentation.cuisine.CuisineViewModel
+import com.example.obrestaurant.presentation.cuisine.state.CuisineScreenState
 import com.example.obrestaurant.presentation.home.HomeScreen
 import com.example.obrestaurant.presentation.home.HomeViewModel
 import com.example.obrestaurant.presentation.home.state.HomeScreenState
@@ -55,6 +58,22 @@ fun RestaurantNavGraph(
         ) { backStackEntry ->
             val cuisineId = backStackEntry.arguments?.getString("cuisineId")
             requireNotNull(cuisineId)
+            val cuisineViewModel: CuisineViewModel = hiltViewModel()
+            val state by cuisineViewModel.state.observeAsState(CuisineScreenState())
+
+            LaunchedEffect(key1 = true) {
+                cuisineViewModel.navigationEvent.collect { route ->
+                    when (route) {
+                        "back" -> navController.popBackStack()
+                        else -> navController.navigate(route)
+                    }
+                }
+            }
+
+            CuisineScreen(
+                state = state,
+                onEvent = cuisineViewModel::onEvent
+            )
         }
 
         composable(Screen.Cart.route) {

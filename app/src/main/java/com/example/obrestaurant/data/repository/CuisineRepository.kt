@@ -26,8 +26,8 @@ class CuisineRepository @Inject constructor(
 
     suspend fun getItemsByFilter(
         cuisineTypes: List<String>?,
-        priceRange: PriceRange?,
-        minRating: Float?
+        priceRange: PriceRange? = null,
+        minRating: Float? = null,
     ): Result<List<Cuisine>> =
         try {
             val response = api.getItemByFilter(
