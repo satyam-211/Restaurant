@@ -1,6 +1,6 @@
 package com.example.obrestaurant.di
 
-import com.example.obrestaurant.data.remote.api.MockInterceptor
+import com.example.obrestaurant.data.remote.HeaderInterceptor
 import com.example.obrestaurant.data.remote.api.RestaurantApi
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,7 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(MockInterceptor())
+            .addInterceptor(HeaderInterceptor())
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })

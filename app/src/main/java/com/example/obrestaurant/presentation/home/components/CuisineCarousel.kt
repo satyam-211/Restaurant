@@ -20,7 +20,7 @@ fun CuisineCarousel(
         items(cuisines) { cuisine ->
             CuisineCard(
                 cuisine = cuisine,
-                onClick = { onCuisineClick(cuisine.id) }
+                onClick = { onCuisineClick(cuisine.name) }
             )
         }
     }

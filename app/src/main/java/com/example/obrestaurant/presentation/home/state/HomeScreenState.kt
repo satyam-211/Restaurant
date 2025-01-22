@@ -17,7 +17,7 @@ enum class Language {
 }
 
 sealed class HomeScreenEvent {
-    data class OnCuisineClick(val cuisineId: String) : HomeScreenEvent()
+    data class OnCuisineClick(val cuisineType: String) : HomeScreenEvent()
     data class OnAddDishToCart(val dish: Dish, val quantity: Int) : HomeScreenEvent()
     data class OnLanguageChange(val language: Language) : HomeScreenEvent()
     data object OnCartClick : HomeScreenEvent()

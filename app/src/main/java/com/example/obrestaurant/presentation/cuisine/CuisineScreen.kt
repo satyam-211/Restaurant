@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,7 +33,7 @@ fun CuisineScreen(
                 title = { Text(state.cuisineName) },
                 navigationIcon = {
                     IconButton(onClick = { onEvent(CuisineScreenEvent.OnBackClick) }) {
-                        Icon(Icons.Default.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
                     }
                 },
                 actions = {
@@ -55,7 +55,7 @@ fun CuisineScreen(
                 )
                 state.error != null -> ErrorView(
                     error = state.error,
-                    onRetryClick = { /* TODO: Add retry functionality */ }
+                    onRetryClick = { onEvent(CuisineScreenEvent.RetryClick) }
                 )
                 else -> CuisineDishList(
                     dishes = state.dishes,

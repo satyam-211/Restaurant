@@ -31,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.obrestaurant.domain.model.Dish
@@ -65,20 +64,23 @@ fun DishCard(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "₹${dish.price}",
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                    Text(
-                        text = "${dish.rating}★",
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
+                if (dish.price != null || dish.rating != null)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (dish.price != null)
+                            Text(
+                                text = "₹${dish.price}",
+                                style = MaterialTheme.typography.labelMedium
+                            )
+                        if (dish.rating != null)
+                            Text(
+                                text = "${dish.rating}★",
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                    }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -145,12 +147,4 @@ fun DishCard(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun DishCardPreview() {
-    DishCard(
-        dish = Dish(id = "", name = "New Dish", "", price = 40.0, rating = 3f),
-        onAddToCart = { a, b -> })
 }

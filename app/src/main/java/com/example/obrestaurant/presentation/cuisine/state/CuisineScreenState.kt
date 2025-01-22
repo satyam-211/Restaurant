@@ -13,4 +13,5 @@ sealed class CuisineScreenEvent {
     data class OnAddDishToCart(val dish: Dish, val quantity: Int) : CuisineScreenEvent()
     data object OnBackClick : CuisineScreenEvent()
     data object OnCartClick : CuisineScreenEvent()
+    data object RetryClick : CuisineScreenEvent()
 }

@@ -40,3 +40,9 @@ data class PaymentItem(
     @SerializedName("item_quantity")
     val itemQuantity: Int
 )
+
+
+data class ItemRequest(
+    @SerializedName("item_id")
+    val itemId: Int
+)

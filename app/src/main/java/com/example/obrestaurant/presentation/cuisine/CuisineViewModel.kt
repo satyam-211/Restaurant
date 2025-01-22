@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.obrestaurant.data.repository.CuisineRepository
+import com.example.obrestaurant.data.repository.OBRestaurantRepository
+import com.example.obrestaurant.domain.manager.CartManager
+import com.example.obrestaurant.presentation.common.Event
 import com.example.obrestaurant.presentation.cuisine.state.CuisineScreenEvent
 import com.example.obrestaurant.presentation.cuisine.state.CuisineScreenState
+import com.example.obrestaurant.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CuisineViewModel @Inject constructor(
-    private val repository: CuisineRepository,
+    private val repository: OBRestaurantRepository,
+    private val cartManager: CartManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -25,8 +29,8 @@ class CuisineViewModel @Inject constructor(
     private val _state = MutableLiveData(CuisineScreenState())
     val state: LiveData<CuisineScreenState> = _state
 
-    private val _navigationEvent = MutableSharedFlow<String>()
-    val navigationEvent = _navigationEvent.asSharedFlow()
+    private val _event = MutableSharedFlow<Event>()
+    val event = _event.asSharedFlow()
 
     init {
         loadCuisine()
@@ -64,21 +68,28 @@ class CuisineViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: CuisineScreenEvent) {
-        when (event) {
+    fun onEvent(cuisineScreenEvent: CuisineScreenEvent) {
+        when (cuisineScreenEvent) {
             is CuisineScreenEvent.OnAddDishToCart -> {
-                // TODO: Implement cart functionality
+                cartManager.addItem(cuisineScreenEvent.dish.id, cuisineScreenEvent.quantity)
+                viewModelScope.launch {
+                    _event.emit(Event.Toast("${cuisineScreenEvent.dish.name} added to cart"))
+                }
             }
+
             CuisineScreenEvent.OnBackClick -> {
                 viewModelScope.launch {
-                    _navigationEvent.emit("back")
+                    _event.emit(Event.Navigation("back"))
                 }
             }
+
             CuisineScreenEvent.OnCartClick -> {
                 viewModelScope.launch {
-                    _navigationEvent.emit("cart")
+                    _event.emit(Event.Navigation(Screen.Cart.route))
                 }
             }
+
+            CuisineScreenEvent.RetryClick -> loadCuisine()
         }
     }
 }

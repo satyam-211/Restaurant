@@ -9,13 +9,14 @@ fun CuisineDto.toDomain() = Cuisine(
     id = cuisineId,
     name = cuisineName,
     imageUrl = cuisineImageUrl,
-    dishes = items.map { it.toDomain() }
+    dishes = items.map { it.toDomain(cuisineId = cuisineId) }
 )
 
-fun DishDto.toDomain() = Dish(
+fun DishDto.toDomain(cuisineId: Int) = Dish(
     id = id,
     name = name,
     imageUrl = imageUrl,
-    price = price.toDoubleOrNull() ?: 0.0,
-    rating = rating.toFloatOrNull() ?: 0f
+    cuisineId = cuisineId,
+    price = price,
+    rating = rating,
 )
